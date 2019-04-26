@@ -25,7 +25,7 @@ const BurgerIngredient = function(props) {
       break;
 
     case "cheese":
-      ingredient = <div className={classes.Cheeze} />;
+      ingredient = <div className={classes.Cheese} />;
       break;
 
     case "bacon":
@@ -43,7 +43,7 @@ const BurgerIngredient = function(props) {
   return ingredient;
 };
 
-BurgerIngredient.PropTypes = {
+BurgerIngredient.propTypes = {
   type: PropTypes.string.isRequired
 };
 
