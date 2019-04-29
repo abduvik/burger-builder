@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import classes from "./BuildControls.module.css";
 import BuildControl from "./BuildControl/BuildControl";
@@ -10,10 +10,17 @@ const controls = [
   { label: "Meat", type: "meat" }
 ];
 
-export default class BuildControls extends Component {
-  render() {
-    return <div className={classes.BuildControls}>{
-      controls.map(ctrl => (<BuildControl key={ctrl.label} label={ctrl.label} />))
-    }</div>;
-  }
+export default function BuildControls(props) {
+  return (
+    <div className={classes.BuildControls}>
+      {controls.map(ctrl => (
+        <BuildControl
+          key={ctrl.label}
+          label={ctrl.label}
+          added={() => props.ingredientAdded(ctrl.type)}
+          removed={() => props.ingredientRemoved(ctrl.type)}
+        />
+      ))}
+    </div>
+  );
 }
