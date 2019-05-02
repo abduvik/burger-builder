@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Aux from "../../hoc/Auxiliary";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControllers/BuildControls";
+import Modal from "../../components/UI/Modal/Modal";
+import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -27,7 +29,7 @@ export default class BurgerBuilder extends Component {
 
   updatePurchaseState(state) {
     const sum = Object.values(state.ingredients).reduce((sum, val) => (sum += val));
-    this.setState({ purchasable: sum > 0 });
+    return sum > 0;
   }
 
   addIngredientHandler = type => {
@@ -39,7 +41,7 @@ export default class BurgerBuilder extends Component {
           [type]: prevState.ingredients[type] + 1
         }
       };
-      this.updatePurchaseState(newState);
+      newState.purchasable = this.updatePurchaseState(newState);
       return newState;
     });
   };
@@ -53,7 +55,7 @@ export default class BurgerBuilder extends Component {
           [type]: prevState.ingredients[type] ? prevState.ingredients[type] - 1 : 0
         }
       };
-      this.updatePurchaseState(newState);
+      newState.purchasable = this.updatePurchaseState(newState);
       return newState;
     });
   };
@@ -69,6 +71,9 @@ export default class BurgerBuilder extends Component {
 
     return (
       <Aux>
+        <Modal>
+          <OrderSummary ingredients={this.state.ingredients} />
+        </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           ingredientAdded={this.addIngredientHandler}
