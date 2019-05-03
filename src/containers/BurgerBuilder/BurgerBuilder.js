@@ -36,6 +36,10 @@ export default class BurgerBuilder extends Component {
     this.setState({ purchasing: false });
   };
 
+  purchaseContinueHandler = () => {
+    alert("Continue");
+  };
+
   updatePurchaseState(state) {
     const sum = Object.values(state.ingredients).reduce((sum, val) => (sum += val));
     return sum > 0;
@@ -81,7 +85,11 @@ export default class BurgerBuilder extends Component {
     return (
       <Aux>
         <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-          <OrderSummary ingredients={this.state.ingredients} />
+          <OrderSummary
+            ingredients={this.state.ingredients}
+            purchaseCancel={this.purchaseCancelHandler}
+            purchaseContinued={this.purchaseContinueHandler}
+          />
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
