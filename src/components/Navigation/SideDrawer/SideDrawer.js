@@ -5,7 +5,7 @@ import classes from "./SideDrawer.module.css";
 
 import Logo from "../../Logo/Logo";
 import Backdrop from "../../UI/Backdrop/Backdrop";
-import Aux from "../../../hoc/Auxiliary";
+import Aux from "../../../hoc/Auxiliary/Auxiliary";
 
 export default function SideDrawer(props) {
   let attachedClasses = [classes.SideDrawer, classes.Close];
