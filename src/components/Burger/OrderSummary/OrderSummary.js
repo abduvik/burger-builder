@@ -9,7 +9,7 @@ export default class OrderSummary extends Component {
     ingredients: PropTypes.object,
     purchaseCancel: PropTypes.func,
     price: PropTypes.string,
-    purchaseContinueHandler: PropTypes.func
+    purchaseContinued: PropTypes.func
   }
 
   render() {
@@ -32,7 +32,7 @@ export default class OrderSummary extends Component {
         <Button btnType="Danger" clicked={this.props.purchaseCancel}>
           CANCEL
         </Button>
-        <Button btnType="Success" clicked={this.props.purchaseContinueHandler}>
+        <Button btnType="Success" clicked={this.props.purchaseContinued}>
           CONTINUE
         </Button>
       </Aux>
