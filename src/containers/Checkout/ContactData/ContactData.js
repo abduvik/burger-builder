@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import Button from "../../../components/UI/Button/Button";
 import axios from "../../../axios-orders";
 
+import { connect } from "react-redux";
+
 import classes from "./ContactData.module.css";
 import Spinner from "../../../components/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
 
-export default class ContactData extends Component {
+class ContactData extends Component {
   state = {
     orderForm: {
       name: {
@@ -93,7 +95,7 @@ export default class ContactData extends Component {
 
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price,
+      totalPrice: this.props.totalPrice,
       orderData: formData
     };
 
@@ -110,7 +112,7 @@ export default class ContactData extends Component {
   };
 
   checkValidity(value, rules) {
-    let isValid = false;
+    let isValid = true;
 
     if (rules.required) {
       isValid = value.trim() !== "";
@@ -192,3 +194,12 @@ export default class ContactData extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice
+  };
+};
+
+export default connect(mapStateToProps)(ContactData);
