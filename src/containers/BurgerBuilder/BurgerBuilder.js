@@ -16,9 +16,7 @@ class BurgerBuilder extends Component {
     super(props);
     this.state = {
       ingredients: null,
-      purchasing: false,
-      loading: false,
-      error: true
+      purchasing: false
     };
   }
 
@@ -27,14 +25,7 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
-    // axios
-    //   .get("/ingredients.json")
-    //   .then(response => {
-    //     this.setState({
-    //       ingredients: response.data
-    //     });
-    //   })
-    //   .catch(error => this.setState({ error: true }));
+    this.props.onInitIngredients();
   }
 
   purchaseCancelHandler = () => {
@@ -62,9 +53,7 @@ class BurgerBuilder extends Component {
     return (
       <Aux>
         <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-          {this.state.loading ? (
-            <Spinner />
-          ) : this.props.ingredients ? (
+          {this.props.ingredients ? (
             <OrderSummary
               ingredients={this.props.ingredients}
               purchaseCancel={this.purchaseCancelHandler}
@@ -87,7 +76,7 @@ class BurgerBuilder extends Component {
               ordered={this.purchaseHandler}
             />
           </Aux>
-        ) : this.state.error ? (
+        ) : this.props.error ? (
           "Ingredients Can't be loaded"
         ) : (
           <Spinner />
@@ -100,14 +89,16 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   return {
     ingredients: state.ingredients,
-    totalPrice: state.totalPrice
+    totalPrice: state.totalPrice,
+    error: state.error
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onIngredientAdded: ingredientName => dispatch(storeActions.addIngredient(ingredientName)),
-    onIngredientRemoved: ingredientName => dispatch(storeActions.removeIngredient(ingredientName))
+    onIngredientRemoved: ingredientName => dispatch(storeActions.removeIngredient(ingredientName)),
+    onInitIngredients: () => dispatch(storeActions.initIngredients())
   };
 };
 
