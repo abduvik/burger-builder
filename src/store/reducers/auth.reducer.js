@@ -1,10 +1,11 @@
-import { AUTH_START, AUTH_SUCCESS, AUTH_FAILED, AUTH_LOGOUT } from "../actions/actionTypes";
+import { AUTH_START, AUTH_SUCCESS, AUTH_FAILED, AUTH_LOGOUT, SET_AUTH_REDIRECT_PATH } from "../actions/actionTypes";
 
 const initialState = {
   token: null,
   userId: null,
   error: null,
-  loading: false
+  loading: false,
+  authRedirectPath: "/"
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -26,6 +27,11 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         token: null,
         userId: null
+      };
+    case SET_AUTH_REDIRECT_PATH:
+      return {
+        ...state,
+        authRedirectPath: payload.path
       };
     default:
       return state;

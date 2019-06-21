@@ -1,4 +1,4 @@
-import { AUTH_START, AUTH_SUCCESS, AUTH_FAILED, AUTH_LOGOUT } from "./actionTypes";
+import { AUTH_START, AUTH_SUCCESS, AUTH_FAILED, AUTH_LOGOUT, SET_AUTH_REDIRECT_PATH } from "./actionTypes";
 import axios from "axios";
 
 export const authStart = () => ({
@@ -63,3 +63,10 @@ export const auth = (email, password, isSignUp) => {
       .catch(error => dispatch(authFailed(error)));
   };
 };
+
+export const setAuthRedirectPath = path => ({
+  type: SET_AUTH_REDIRECT_PATH,
+  payload: {
+    path
+  }
+});

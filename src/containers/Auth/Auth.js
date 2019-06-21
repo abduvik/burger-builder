@@ -3,7 +3,7 @@ import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 
 import classes from "./Auth.module.css";
-import { auth } from "../../store/actions/auth.actions";
+import { auth, setAuthRedirectPath } from "../../store/actions/auth.actions";
 import { connect } from "react-redux";
 import Spinner from "../../components/Spinner/Spinner";
 import { Redirect } from "react-router-dom";
@@ -93,9 +93,15 @@ class Auth extends Component {
     }));
   };
 
+  componentDidMount() {
+    if (!this.props.buildingBurger && this.props.authRedirectPath !== "/") {
+      this.props.setAuthRedirectPath('/');
+    }
+  }
+
   render() {
     if (this.props.isAuth) {
-      return <Redirect to="/" />;
+      return <Redirect to={this.props.authRedirectPath} />;
     }
 
     const formElmentsArray = [];
@@ -139,11 +145,14 @@ class Auth extends Component {
 const mapStateToProps = state => ({
   loading: state.auth.loading,
   error: state.auth.error,
-  isAuth: state.auth.token !== null
+  isAuth: state.auth.token !== null,
+  buildingBurger: state.burgerBuilder.building,
+  authRedirectPath: state.auth.authRedirectPath
 });
 
 const mapDispatchToProps = {
-  auth
+  auth,
+  setAuthRedirectPath
 };
 
 export default connect(

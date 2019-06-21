@@ -11,6 +11,7 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
 import { addIngredient, removeIngredient, initIngredients } from "../../store/actions/burgerBuilder.actions";
 import { purchaseInit } from "../../store/actions/order.actions";
+import { setAuthRedirectPath } from "../../store/actions/auth.actions";
 
 class BurgerBuilder extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class BurgerBuilder extends Component {
     if (this.props.isAuth) {
       this.setState({ purchasing: true });
     } else {
+      this.props.onSetAuthRedirectPath('/checkout');
       this.props.history.push("/auth");
     }
   };
@@ -107,7 +109,8 @@ const mapDispatchToProps = dispatch => {
     onIngredientAdded: ingredientName => dispatch(addIngredient(ingredientName)),
     onIngredientRemoved: ingredientName => dispatch(removeIngredient(ingredientName)),
     onInitIngredients: () => dispatch(initIngredients()),
-    onInitPurchase: () => dispatch(purchaseInit())
+    onInitPurchase: () => dispatch(purchaseInit()),
+    onSetAuthRedirectPath: (path) => dispatch(setAuthRedirectPath(path))
   };
 };
 
