@@ -13,6 +13,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.authCheckState();
   }
+  
   render() {
     return (
       <div>
