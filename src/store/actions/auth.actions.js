@@ -5,6 +5,10 @@ export const authStart = () => ({
   type: AUTH_START
 });
 
+export const authLogout = () => ({
+  type: AUTH_LOGOUT
+});
+
 export const authSuccess = authData => ({
   type: AUTH_SUCCESS,
   payload: {
@@ -20,21 +24,17 @@ export const authFailed = error => ({
   }
 });
 
-export const logout = (payload) => ({
-    type: AUTH_LOGOUT
-})
+export const logout = payload => ({
+  type: AUTH_LOGOUT
+});
 
-
-export const checkAuthTimeout = (expirtationTime) => {
-    return dispatch => {
-        setTimeout(() => {
-            dispatch(logout());
-        }, expirtationTime * 1000);
-    }
-}
-
-
-
+export const checkAuthTimeout = expirtationTime => {
+  return dispatch => {
+    setTimeout(() => {
+      dispatch(logout());
+    }, expirtationTime * 1000);
+  };
+};
 
 export const auth = (email, password, isSignUp) => {
   return dispatch => {

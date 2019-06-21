@@ -72,10 +72,11 @@ export const fetchOrderStart = orders => {
 };
 
 export const fetchOrders = () => {
-  return dispatch => {
+  return (dispatch, getStore) => {
     dispatch(fetchOrderStart());
+    const store = getStore();
     axios
-      .get("/orders.json")
+      .get("/orders.json?auth="+store.auth.token)
       .then(res => {
         const fetechedOrders = [];
         for (let key in res.data) {
