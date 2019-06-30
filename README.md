@@ -1,4 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Burger Builder
+
+## [Live Demo](https://buildburger.netlify.com)
+
+## Description
+
+This is a ReactJS + Redux web application built through the course [React - The Complete Guide (incl Hooks, React Router, Redux)](https://www.udemy.com/react-the-complete-guide-incl-redux/) as class work for learning React and Redux.
+
 
 ## Available Scripts
 
