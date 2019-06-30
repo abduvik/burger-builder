@@ -1,37 +1,36 @@
-import React from "react";
+import React, { useEffect, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 import Layout from "./hoc/Layout/Layout";
-import Auth from "./containers/Auth/Auth";
 import Logout from "./containers/Auth/Logout/Logout";
 import { connect } from "react-redux";
 import { authCheckState } from "./store/actions/auth.actions";
-import asyncComponent from './hoc/asyncComponent/asyncComponent';
 
-class App extends React.Component {
-  componentDidMount() {
-    this.props.authCheckState();
-  }
-  
-  render() {
-    const AsyncCheckout = asyncComponent(() => import('./containers/Checkout/Checkout'));
-    const AsyncOrders = asyncComponent(() => import('./containers/Orders/Orders'));
+const App = props => {
+  useEffect(() => {
+    props.authCheckState();
+  });
 
-    return (
-      <div>
-        <Layout>
+  const Checkout = React.lazy(() => import("./containers/Checkout/Checkout"));
+  const Orders = React.lazy(() => import("./containers/Orders/Orders"));
+  const Auth = React.lazy(() => import("./containers/Auth/Auth"));
+
+  return (
+    <div>
+      <Layout>
+        <Suspense fallback={<p>Loading...</p>}>
           <Switch>
-            <Route path="/checkout" component={AsyncCheckout} />
-            <Route path="/orders" component={AsyncOrders} />
-            <Route path="/auth" component={Auth} />
+            <Route path="/checkout" render={() => <Checkout />} />
+            <Route path="/orders"  render={() => <Orders />} />
+            <Route path="/auth"  render={() => <Auth />} />
             <Route path="/logout" component={Logout} />
             <Route path="/" exact component={BurgerBuilder} />
           </Switch>
-        </Layout>
-      </div>
-    );
-  }
-}
+        </Suspense>
+      </Layout>
+    </div>
+  );
+};
 
 const mapDispatchToProps = {
   authCheckState
