@@ -1,39 +1,40 @@
-import React, { Component } from "react";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import ContactData from "./ContactData/ContactData";
 
 import { connect } from "react-redux";
 
-class Checkout extends Component {
-
-  checkoutCanceledHandler = () => {
-    this.props.history.goBack();
+const Checkout = props => {
+  const checkoutCanceledHandler = () => {
+    props.history.goBack();
   };
-  checkoutContinuedHandler = () => {
-    this.props.history.replace("/checkout/contact-data");
+  const checkoutContinuedHandler = () => {
+    props.history.replace("/checkout/contact-data");
   };
 
-  render() {
-    return this.props.ingredients && !this.props.purchased ? (
-      <div>
-        <CheckoutSummary
-          ingredients={this.props.ingredients}
-          onCheckoutCanceled={this.checkoutCanceledHandler}
-          onCheckoutContinued={this.checkoutContinuedHandler}
-        />
-        <Route
-          path={this.props.match.path + "/contact-data"}
-          render={props => (
-            <ContactData {...props} ingredients={this.props.ingredients} price={this.props.totalPrice} />
-          )}
-        />
-      </div>
-    ) : (
-      <Redirect to="/" />
-    );
-  }
-}
+  return props.ingredients && !props.purchased ? (
+    <div>
+      <CheckoutSummary
+        ingredients={props.ingredients}
+        onCheckoutCanceled={checkoutCanceledHandler}
+        onCheckoutContinued={checkoutContinuedHandler}
+      />
+      <Route
+        path={props.match.path + "/contact-data"}
+        render={props => (
+          <ContactData
+            {...props}
+            ingredients={props.ingredients}
+            price={props.totalPrice}
+          />
+        )}
+      />
+    </div>
+  ) : (
+    <Redirect to="/" />
+  );
+};
 
 const mapStateToProps = state => {
   return {
@@ -43,6 +44,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps
-)(Checkout);
+export default connect(mapStateToProps)(Checkout);
